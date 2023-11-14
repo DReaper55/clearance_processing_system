@@ -73,7 +73,7 @@ class AssetStrings {
 class FireStoreCollectionStrings {
   FireStoreCollectionStrings._();
 
-  // static const vendors = 'vendors';
+  static const admin = 'admin';
 }
 
 class FBRealtimeDBCollectionStrings {

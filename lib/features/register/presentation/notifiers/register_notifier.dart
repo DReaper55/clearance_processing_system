@@ -7,8 +7,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'create_account.dart';
+
 final registerNotifierProvider =
     ChangeNotifierProvider((ref) => RegisterNotifier(ref));
+
+final authCredState = StateProvider<AuthCredential?>((ref) => null);
 
 class RegisterNotifier extends ChangeNotifier {
   final Ref ref;
@@ -28,35 +32,22 @@ class RegisterNotifier extends ChangeNotifier {
     isCreating.value = true;
     notifyListeners();
 
-    try {
-      UserCredential appUser = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-          email: email, password: password);
+    final appUser = await ref.read(createAccountProvider).createUserWithEmailAndPassword(email: email, password: password);
 
-      isCreating.value = false;
-      notifyListeners();
+    isCreating.value = false;
+    notifyListeners();
 
-      if(appUser.user == null) {
-        showError(text: AppStrings.errorText, context: context);
-
-        return;
-      }
-
-      showSuccess(text: 'Account created', context: context);
-
-      ref.read(navigationService).navigateToNamed(Routes.sideNavPages);
+    if(appUser == null || appUser.user == null) {
+      showError(text: AppStrings.errorText, context: context);
 
       return;
-    } on Failure catch (ex) {
-      isCreating.value = false;
-      notifyListeners();
-
-      showError(text: ex.message, context: context);
-      throw Exception(
-          'FirebaseAuthFailure: Failed to Register user to Firebase');
-    } finally {
-
     }
+
+    showSuccess(text: 'Account created', context: context);
+
+    ref.read(authCredState.state).state = appUser.credential;
+
+    ref.read(navigationService).navigateToNamed(Routes.sideNavPages);
   }
 
   void navigateToRegistrationPage() {

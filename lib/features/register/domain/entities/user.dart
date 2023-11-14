@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
-  final String? fullName, email, role, faculty, department, createdBy;
+class UserEntity extends Equatable {
+  final String? fullName, uid, email, role, faculty, department, createdBy;
+  final String? dateTime;
   final bool? isSubscribed;
 
 
-  const User({this.fullName, this.email, this.role, this.faculty, this.department,
-    this.createdBy, this.isSubscribed});
+  const UserEntity({this.dateTime, this.uid, this.fullName, this.email, this.role, this.faculty, this.department, this.createdBy, this.isSubscribed});
 
-  User.fromMap(Map<dynamic, dynamic> list)
+  UserEntity.fromMap(Map<dynamic, dynamic> list)
       : role = list["role"],
         email = list["email"],
+        uid = list["uid"],
+        dateTime = list["dateTime"],
         fullName = list["fullname"],
         department = list["department"],
         faculty = list["faculty"],
@@ -22,6 +24,8 @@ class User extends Equatable {
     return <String, dynamic>{
       "role": role,
       "email": email,
+      "uid": uid,
+      "dateTime": dateTime,
       "fullname": fullName,
       "faculty": faculty,
       "createdBy": createdBy,
@@ -32,7 +36,7 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [
-    fullName, email, role, faculty, department,
-    createdBy, isSubscribed
+    fullName, email, uid, role, faculty, department,
+    createdBy, isSubscribed, dateTime
   ];
 }

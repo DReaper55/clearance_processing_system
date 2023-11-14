@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../register/presentation/notifiers/register_notifier.dart';
+
 final loginNotifierProvider =
     ChangeNotifierProvider((ref) => LoginNotifier(ref));
 
@@ -48,6 +50,8 @@ class LoginNotifier extends ChangeNotifier {
 
         return;
       }
+
+      ref.read(authCredState.state).state = appUser.credential;
 
       ref.read(navigationService).navigateToNamed(Routes.sideNavPages);
       return;
