@@ -8,10 +8,10 @@ final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
 final navigatorKeysProvider = Provider<Map<String, GlobalKey<NavigatorState>>>((ref) {
   return {
-    Routes.homepage: GlobalKey<NavigatorState>(),
-    // Routes.category: GlobalKey<NavigatorState>(),
-    // Routes.orders: GlobalKey<NavigatorState>(),
-    // Routes.more: GlobalKey<NavigatorState>(),
+    Routes.dashboard: GlobalKey<NavigatorState>(),
+    Routes.userManagement: GlobalKey<NavigatorState>(),
+    Routes.studentManagement: GlobalKey<NavigatorState>(),
+    Routes.feeManagement: GlobalKey<NavigatorState>(),
   };
 });
 

@@ -1,8 +1,17 @@
 
+import 'package:clearance_processing_system/features/clearance/presentation/pages/clearance.dart';
+import 'package:clearance_processing_system/features/dashboard/presentation/pages/dashboard.dart';
+import 'package:clearance_processing_system/features/fee-management/presentation/pages/fee_management.dart';
 import 'package:clearance_processing_system/features/homepage/presentation/pages/homepage.dart';
 import 'package:clearance_processing_system/features/homepage/presentation/pages/side_nav_pages.dart';
 import 'package:clearance_processing_system/features/login/presentation/pages/login.dart';
+import 'package:clearance_processing_system/features/my-profile/presentation/pages/my_profile.dart';
 import 'package:clearance_processing_system/features/register/presentation/pages/register.dart';
+import 'package:clearance_processing_system/features/student-management/presentation/pages/student_management.dart';
+import 'package:clearance_processing_system/features/user-management/presentation/pages/create_new_user.dart';
+import 'package:clearance_processing_system/features/user-management/presentation/pages/user_management.dart';
+import 'package:clearance_processing_system/features/user-management/presentation/pages/view_users.dart';
+import 'package:clearance_processing_system/features/wallet/presentation/pages/wallet.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -17,7 +26,11 @@ class Routes {
   static const sideNavPages = '/sideNavPages';
   static const dashboard = '/dashboard';
   static const studentManagement = '/studentManagement';
+
   static const userManagement = '/userManagement';
+  static const createNewUser = '/createNewUser';
+  static const viewUsers = '/viewUsers';
+
   static const feeManagement = '/feeManagement';
   static const myProfile = '/myProfile';
   static const wallet = '/wallet';
@@ -39,21 +52,25 @@ class Routes {
       case first:
         return MaterialPageRoute(builder: (_) => const SizedBox());
       case dashboard:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const Dashboard());
       case sideNavPages:
         return MaterialPageRoute(builder: (_) => const SideNavPages());
       case studentManagement:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const StudentManagement());
       case userManagement:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const UserManagement());
+      case createNewUser:
+        return MaterialPageRoute(builder: (_) => const CreateNewUser());
+      case viewUsers:
+        return MaterialPageRoute(builder: (_) => const ViewUsers());
       case feeManagement:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const FeeManagement());
       case myProfile:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const MyProfile());
       case wallet:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const Wallet());
       case clearance:
-        return MaterialPageRoute(builder: (_) => const SizedBox());
+        return MaterialPageRoute(builder: (_) => const Clearance());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

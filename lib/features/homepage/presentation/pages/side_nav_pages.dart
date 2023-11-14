@@ -63,7 +63,7 @@ class SideNavPages extends HookConsumerWidget {
             Expanded(
               child: Stack(
                 children: <Widget>[
-                  _buildOffstageNavigator(ref, Routes.homepage, currentPage),
+                  _buildOffstageNavigator(ref, Routes.dashboard, currentPage),
                   _buildOffstageNavigator(ref, Routes.userManagement, currentPage),
                   _buildOffstageNavigator(ref, Routes.studentManagement, currentPage),
                   _buildOffstageNavigator(ref, Routes.feeManagement, currentPage),

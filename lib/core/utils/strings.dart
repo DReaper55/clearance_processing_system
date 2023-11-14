@@ -24,6 +24,12 @@ class AppStrings {
   static const successUpdatedOrderStatus = 'Updated order status';
 
   static const addedToCart = 'Item added to cart';
+
+  static const dashboard = 'Dashboard';
+  static const userManagement = 'User management';
+  static const createNewUser = 'Create a new user';
+  static const viewRecords = 'User records';
+
 }
 
 class ButtonStrings {

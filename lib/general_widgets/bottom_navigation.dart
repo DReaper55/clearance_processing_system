@@ -1,9 +1,11 @@
+import 'package:clearance_processing_system/core/services/navigation_services.dart';
 import 'package:clearance_processing_system/core/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../core/utils/icons.dart';
+import '../core/utils/routes.dart';
 
 class NavigationRailWidget extends HookConsumerWidget {
   final StateController<int> currentIndex;
@@ -29,7 +31,11 @@ class NavigationRailWidget extends HookConsumerWidget {
           }(),
           onPressed: () => isExtended.value = !isExtended.value,
         ),
-        trailing: TextButton(onPressed: (){}, child: const Text('Logout'),),
+        trailing: TextButton(onPressed: (){
+          FirebaseAuth.instance.signOut();
+
+          ref.read(navigationService).navigateOffAllNamed(Routes.login, (p0) => false);
+        }, child: const Text('Logout'),),
         onDestinationSelected: (index){
           currentIndex.state = index;
 
@@ -44,40 +50,5 @@ class NavigationRailWidget extends HookConsumerWidget {
         NavigationRailDestination(icon: Icon(Icons.attach_money, color: Colors.grey,), label: Text('Fee Management'), selectedIcon: Icon(Icons.attach_money_sharp, color: UCPSColors.primary)),
       ],
     );
-
-    /*return BottomNavigationBar(
-        currentIndex: currentIndex.state,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index){
-          currentIndex.state = index;
-
-          if(onTap == null) return;
-          onTap!();
-        },
-        items: [
-          BottomNavigationBarItem(
-            label: 'Home',
-            activeIcon: GradientWidget(child: SvgPicture.asset(AppIcons.homeFilled, )),
-              icon: SvgPicture.asset(AppIcons.home)),
-
-          BottomNavigationBarItem(
-            label: 'Categories',
-            activeIcon: GradientWidget(child: SvgPicture.asset(AppIcons.categoriesFilled)),
-              icon: SvgPicture.asset(AppIcons.categories)),
-
-          BottomNavigationBarItem(
-            label: 'Orders',
-            activeIcon: GradientWidget(child: SvgPicture.asset(AppIcons.orders)),
-              icon: SvgPicture.asset(AppIcons.orders)),
-
-          BottomNavigationBarItem(
-            label: 'More',
-            activeIcon: GradientWidget(child: SvgPicture.asset(AppIcons.moreFilled)),
-              icon: SvgPicture.asset(AppIcons.more)),
-
-        ]);*/
   }
 }
