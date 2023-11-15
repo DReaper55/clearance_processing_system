@@ -22,7 +22,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
 
   runApp(const ProviderScope(child: UCPSApp()));
 }

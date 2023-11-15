@@ -173,7 +173,7 @@ class _ShrinkButtonState extends State<ShrinkButton>
                         textAlign: TextAlign.center,
                       ),
               if (widget.isLoading)
-                NetServeLoader(
+                UCPSLoader(
                   color: widget.textColor ?? UCPSColors.white,
                 )
             ],

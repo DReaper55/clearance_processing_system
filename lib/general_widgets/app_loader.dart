@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 import '../core/utils/colors.dart';
 
-class NetServeLoader extends StatelessWidget {
-  const NetServeLoader({
+class UCPSLoader extends StatelessWidget {
+  const UCPSLoader({
     Key? key,
     this.color,
     this.size = 35,

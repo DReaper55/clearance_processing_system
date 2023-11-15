@@ -32,6 +32,8 @@ class AppStrings {
   static const studentManagement = 'Student management';
   static const viewStudents = 'Student records';
   static const createNewStudent = 'Register student';
+  static const feeManagement = 'Fee management';
+  static const postAFee = 'Post a fee';
 
 }
 
@@ -78,6 +80,7 @@ class FireStoreCollectionStrings {
 
   static const admin = 'admin';
   static const students = 'students';
+  static const fees = 'fees';
 }
 
 class FBRealtimeDBCollectionStrings {

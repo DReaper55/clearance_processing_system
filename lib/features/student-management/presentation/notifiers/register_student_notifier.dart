@@ -84,7 +84,7 @@ class RegisterStudentNotifier extends ChangeNotifier {
 
     try {
       return await ref.read(addDataToFireStore(FireStoreParams(
-        collectionName: FireStoreCollectionStrings.admin,
+        collectionName: FireStoreCollectionStrings.students,
         uid: userUid,
         data: user.toMap(),
       )).future);

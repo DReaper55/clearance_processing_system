@@ -15,7 +15,7 @@ class Alert {
       backgroundColor: notificationType == 1
           ? Colors.red.shade500
           : Colors.green.shade500,
-      width: MediaQuery.of(context).size.width * .5,
+      width: MediaQuery.of(context).size.width * .4,
       // margin: const EdgeInsets.all(8.0),
       padding: const EdgeInsets.all(15.0),
       behavior: SnackBarBehavior.floating,
