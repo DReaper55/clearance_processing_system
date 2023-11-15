@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../utils/routes.dart';
 
-final currentPageProvider = StateProvider<String>((ref) => Routes.homepage);
+final currentPageProvider = StateProvider<String>((ref) => Routes.dashboard);
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
 final navigatorKeysProvider = Provider<Map<String, GlobalKey<NavigatorState>>>((ref) {

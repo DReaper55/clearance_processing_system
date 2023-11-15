@@ -3,7 +3,7 @@ import 'package:clearance_processing_system/general_widgets/custom-widgets/verti
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:clearance_processing_system/core/utils/routes.dart';
-import 'package:clearance_processing_system/general_widgets/bottom_navigation.dart';
+import 'package:clearance_processing_system/general_widgets/side_navigation.dart';
 
 import '../../../../core/services/new_navigation_services.dart';
 
@@ -39,8 +39,8 @@ class SideNavPages extends HookConsumerWidget {
         final isFirstRouteInCurrentTab =
         !await navigatorKeys[currentPage]!.currentState!.maybePop();
         if (isFirstRouteInCurrentTab) {
-          if (currentPage != Routes.homepage) {
-            selectTab(Routes.homepage, 0);
+          if (currentPage != Routes.dashboard) {
+            selectTab(Routes.dashboard, 0);
             return false;
           }
         }
@@ -81,7 +81,7 @@ class SideNavPages extends HookConsumerWidget {
       offstage: currentPage != pageKey,
       child: Navigator(
         key: ref.read(navigatorKeysProvider)[pageKey],
-        initialRoute: Routes.homepage,
+        initialRoute: Routes.dashboard,
         onGenerateRoute: Routes.generateRoute,
       ),
     );
