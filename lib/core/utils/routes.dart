@@ -7,7 +7,9 @@ import 'package:clearance_processing_system/features/homepage/presentation/pages
 import 'package:clearance_processing_system/features/login/presentation/pages/login.dart';
 import 'package:clearance_processing_system/features/my-profile/presentation/pages/my_profile.dart';
 import 'package:clearance_processing_system/features/register/presentation/pages/register.dart';
+import 'package:clearance_processing_system/features/student-management/presentation/pages/register_student.dart';
 import 'package:clearance_processing_system/features/student-management/presentation/pages/student_management.dart';
+import 'package:clearance_processing_system/features/student-management/presentation/pages/view_students.dart';
 import 'package:clearance_processing_system/features/user-management/presentation/pages/create_new_user.dart';
 import 'package:clearance_processing_system/features/user-management/presentation/pages/user_management.dart';
 import 'package:clearance_processing_system/features/user-management/presentation/pages/view_users.dart';
@@ -25,7 +27,10 @@ class Routes {
 
   static const sideNavPages = '/sideNavPages';
   static const dashboard = '/dashboard';
+
   static const studentManagement = '/studentManagement';
+  static const createStudent = '/createStudent';
+  static const viewStudents = '/viewStudents';
 
   static const userManagement = '/userManagement';
   static const createNewUser = '/createNewUser';
@@ -57,6 +62,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const SideNavPages());
       case studentManagement:
         return MaterialPageRoute(builder: (_) => const StudentManagement());
+      case createStudent:
+        return MaterialPageRoute(builder: (_) => const RegisterStudent());
+      case viewStudents:
+        return MaterialPageRoute(builder: (_) => const ViewStudents());
       case userManagement:
         return MaterialPageRoute(builder: (_) => const UserManagement());
       case createNewUser:

@@ -29,6 +29,9 @@ class AppStrings {
   static const userManagement = 'User management';
   static const createNewUser = 'Create a new user';
   static const viewRecords = 'User records';
+  static const studentManagement = 'Student management';
+  static const viewStudents = 'Student records';
+  static const createNewStudent = 'Register student';
 
 }
 
@@ -74,6 +77,7 @@ class FireStoreCollectionStrings {
   FireStoreCollectionStrings._();
 
   static const admin = 'admin';
+  static const students = 'students';
 }
 
 class FBRealtimeDBCollectionStrings {
