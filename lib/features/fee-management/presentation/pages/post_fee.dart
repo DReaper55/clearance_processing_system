@@ -5,9 +5,11 @@ import 'package:clearance_processing_system/core/utils/text_styles.dart';
 import 'package:clearance_processing_system/core/utils/validations.dart';
 import 'package:clearance_processing_system/general_widgets/UCPSScaffold.dart';
 import 'package:clearance_processing_system/general_widgets/app_loader.dart';
+import 'package:clearance_processing_system/general_widgets/custom-widgets/dropdown_field.dart';
 import 'package:clearance_processing_system/general_widgets/shrink_button.dart';
 import 'package:clearance_processing_system/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../notifiers/fee_notifier.dart';
@@ -19,6 +21,14 @@ class PostFee extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final createNewFeeNotifier = ref.watch(createNewFeeNotifierProvider);
+
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        createNewFeeNotifier.setData();
+      });
+
+      return () {};
+    }, []);
 
     return UCPSScaffold(
       title: AppStrings.postAFee,
@@ -37,11 +47,17 @@ class PostFee extends HookConsumerWidget {
               ),
               const Spacing.bigHeight(),
 
-              Text(
-                LabelStrings.accountNumber,
-                style: Styles.w400(color: Colors.black54),
+              // ................................................
+              // Amount
+              // ................................................
+              _LoadingTextField(
+                hintText: 'Amount',
+                controller: createNewFeeNotifier.amountController,
+                enabled: true,
+                // data: createNewFeeNotifier.onData,
+                isLoading: createNewFeeNotifier.isLoadingAccNum,
               ),
-              const Spacing.tinyHeight(),
+              const Spacing.largeHeight(),
               // ................................................
               // Account Number
               // ................................................
@@ -57,11 +73,6 @@ class PostFee extends HookConsumerWidget {
               // ................................................
               // Bank Name
               // ................................................
-              Text(
-                LabelStrings.bankName,
-                style: Styles.w400(color: Colors.black54),
-              ),
-              const Spacing.tinyHeight(),
               _LoadingTextField(
                 hintText: LabelStrings.bankName,
                 controller: createNewFeeNotifier.bankNameController,
@@ -71,11 +82,6 @@ class PostFee extends HookConsumerWidget {
                 isLoading: createNewFeeNotifier.isLoadingAccNum,
               ),
               const Spacing.largeHeight(),
-              Text(
-                LabelStrings.accountName,
-                style: Styles.w400(color: Colors.black54),
-              ),
-              const Spacing.tinyHeight(),
               // ................................................
               // Account name
               // ................................................
@@ -85,6 +91,43 @@ class PostFee extends HookConsumerWidget {
                 enabled: false,
                 // data: createNewFeeNotifier.onData,
                 isLoading: createNewFeeNotifier.isLoadingAccNum,
+              ),
+
+              const Spacing.xLargeHeight(),
+              if(createNewFeeNotifier.selectedDepartments.value.isNotEmpty)
+                SizedBox(
+                  width: Helpers.width(context),
+                  height: 60.0,
+                  child: ListView.separated(
+                      itemBuilder: (ctx, i){
+                        final department = createNewFeeNotifier.selectedDepartments.value[i];
+
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(department!.values.first),
+                                const Spacing.smallWidth(),
+
+                                IconButton(onPressed: () => createNewFeeNotifier.removeItem(department), icon: const Icon(Icons.close))
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (ctx, i) => const Spacing.mediumHeight(),
+                      itemCount: createNewFeeNotifier.selectedDepartments.value.length,
+                  ),
+                ),
+
+              const Spacing.xLargeHeight(),
+              DropDownField(
+                values: createNewFeeNotifier.listOfDepartments,
+                label: "Which Department's students should pay this fee",
+                onChanged: createNewFeeNotifier.onDropdownChanged,
+                // currentValue: createNewFeeNotifier.selectedRole.value,
               ),
 
               const Spacing.xxLargeHeight(),

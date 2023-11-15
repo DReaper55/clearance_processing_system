@@ -1,5 +1,7 @@
+import 'package:clearance_processing_system/core/helpers/extensions.dart';
 import 'package:clearance_processing_system/core/helpers/helpers_functions.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
+import 'package:clearance_processing_system/features/fee-management/domain/enitites/requirement_entity.dart';
 import 'package:clearance_processing_system/features/register/domain/use-cases/vendor_firestore_usecases.dart';
 import 'package:clearance_processing_system/features/register/presentation/providers/save_data_to_firebase_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,11 +18,14 @@ import '../widgets/paystack_banks_bottomsheet.dart';
 final createNewFeeNotifierProvider =
 ChangeNotifierProvider((ref) => FeeNotifier(ref));
 
+enum Departments { all, computer, statistics, chemistry }
+
 class FeeNotifier extends ChangeNotifier {
   final Ref ref;
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController accountNumberController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
   final TextEditingController accountNameController = TextEditingController();
   final TextEditingController bankNameController = TextEditingController();
 
@@ -29,7 +34,21 @@ class FeeNotifier extends ChangeNotifier {
   final isCreating = ValueNotifier(false);
   final isLoadingAccNum = ValueNotifier(false);
 
+  final selectedDepartments = ValueNotifier<List<Map<Departments, String>?>>([]);
+  final listOfDepartments = [
+    {Departments.all: 'All'},
+    {Departments.computer: 'Computer science'},
+    {Departments.statistics: 'Maths & Stats'},
+    {Departments.chemistry: 'Chemistry'},
+  ];
+
   FeeNotifier(this.ref);
+
+  void setData() {
+    selectedDepartments.value.add(listOfDepartments.first);
+
+    notifyListeners();
+  }
 
   void onData(data) {
     if(!isLoadingAccNum.value) return;
@@ -85,6 +104,21 @@ class FeeNotifier extends ChangeNotifier {
       return;
     }
 
+    if(isSuccessful && selectedDepartments.value.isNotEmpty){
+      final departments = selectedDepartments.value;
+
+      for(var department in departments){
+        // final data = RequirementEntity(
+        //   title: ,
+        //   feeID: ,
+        //   dateTime: ,
+        //   description: ,
+        //   postedBy: ,
+        //   requirementID: ,
+        // );
+      }
+    }
+
     showSuccess(text: 'Successfully created fee', context: context);
   }
 
@@ -94,8 +128,10 @@ class FeeNotifier extends ChangeNotifier {
     final fee = FeeEntity(
       postedBy: userUid,
       dateTime: DateTime.now().toString(),
+      departmentsToPay: selectedDepartments.value.map((e) => e!.keys.first.name).join('-'),
       accountName: accountNameController.text,
       accountNumber: accountNumberController.text,
+      amount: amountController.text,
       bankCode: mSelectedBank.value!.code,
       bankName: mSelectedBank.value!.name,
       feeID: nanoid(6),
@@ -105,8 +141,23 @@ class FeeNotifier extends ChangeNotifier {
     try {
       return await ref.read(addDataToFireStore(FireStoreParams(
         collectionName: FireStoreCollectionStrings.fees,
-        uid: userUid,
+        uid: userUid.docFormat(id: fee.feeID!.toString()),
         data: fee.toMap(),
+      )).future);
+    } catch (e, stack) {
+      debugPrintStack(stackTrace: stack);
+      return false;
+    }
+  }
+
+  Future<bool> _saveRequirementData(RequirementEntity data) async {
+    String userUid = FirebaseAuth.instance.currentUser!.uid;
+
+    try {
+      return await ref.read(addDataToFireStore(FireStoreParams(
+        collectionName: FireStoreCollectionStrings.requirements,
+        uid: userUid,
+        data: data.toMap(),
       )).future);
     } catch (e, stack) {
       debugPrintStack(stackTrace: stack);
@@ -153,5 +204,36 @@ class FeeNotifier extends ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  void onDropdownChanged(Map<Departments, String>? value) {
+    if(value == null) return;
+
+    final key = value.keys.first;
+
+    if(key == Departments.all){
+      selectedDepartments.value.clear();
+      selectedDepartments.value.add(value);
+
+      notifyListeners();
+
+      return;
+    }
+
+    selectedDepartments.value.removeWhere((element) => element!.keys.first == Departments.all);
+
+    final foundDep = selectedDepartments.value.firstWhere((element) => element!.keys.first == key, orElse: () => {});
+
+    if(foundDep == null || foundDep.isEmpty){
+      selectedDepartments.value.add(value);
+    }
+
+    notifyListeners();
+  }
+
+  void removeItem(Map<Departments, String> department) {
+    selectedDepartments.value.removeWhere((element) => element!.keys.first == department.keys.first);
+
+    notifyListeners();
   }
 }

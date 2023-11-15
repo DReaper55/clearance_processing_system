@@ -11,7 +11,7 @@ class ViewFeesNotifier extends ChangeNotifier {
   final Ref ref;
   
   final fees = ValueNotifier<List<FeeEntity>>([]);
-  
+
   ViewFeesNotifier(this.ref);
   
   void getFees() {

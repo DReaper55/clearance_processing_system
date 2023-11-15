@@ -1,3 +1,4 @@
+import 'package:clearance_processing_system/core/helpers/extensions.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
 import 'package:clearance_processing_system/general_widgets/UCPSScaffold.dart';
 import 'package:flutter/material.dart';
@@ -51,11 +52,19 @@ class UserTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final userRecords = viewFeesNotifier.fees.value;
     List<DataRow> dataRows = userRecords.map((e) => DataRow(cells: [
-      DataCell(Text(e.title!)),
-      DataCell(Text(e.accountNumber!)),
-      DataCell(Text(e.accountName!)),
-      DataCell(Text(e.bankName!)),
-      DataCell(Text(e.dateTime!)),
+      DataCell(Text(e.title ?? '')),
+      DataCell(Text((){
+        if(e.amount != null){
+          return 'N${e.amount!.addComma()}';
+        }
+
+        return '';
+      }())),
+      DataCell(Text(e.accountNumber ?? '')),
+      DataCell(Text(e.accountName ?? '')),
+      DataCell(Text(e.bankName ?? '')),
+      DataCell(Text(e.departmentsToPay ?? '')),
+      DataCell(Text(e.dateTime ?? '')),
     ])).toList();
 
 
@@ -65,9 +74,11 @@ class UserTable extends StatelessWidget {
         rows: dataRows,
         columns: const [
           DataColumn(label: Text("Title")),
+          DataColumn(label: Text("Amount")),
           DataColumn(label: Text("Account number")),
           DataColumn(label: Text("Account name")),
           DataColumn(label: Text("Bank name")),
+          DataColumn(label: Text("Departments to pay")),
           DataColumn(label: Text("Date created")),
         ],
       ),

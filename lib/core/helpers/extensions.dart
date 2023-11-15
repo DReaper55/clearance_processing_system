@@ -56,9 +56,9 @@ extension DocIDFormat on String {
     return '$this-$uid';
   }
 
-  String docCustomerFormat({String? inventoryId}) {
-    if (inventoryId != null) {
-      return '$this-$inventoryId';
+  String docFormat({String? id}) {
+    if (id != null) {
+      return '$this-$id';
     }
 
     return this;

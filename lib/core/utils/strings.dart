@@ -81,6 +81,7 @@ class FireStoreCollectionStrings {
   static const admin = 'admin';
   static const students = 'students';
   static const fees = 'fees';
+  static const requirements = 'requirements';
 }
 
 class FBRealtimeDBCollectionStrings {
