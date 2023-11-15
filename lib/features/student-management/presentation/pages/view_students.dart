@@ -24,14 +24,14 @@ class ViewStudents extends HookConsumerWidget {
     }, []);
 
     return UCPSScaffold(
-        title: AppStrings.viewRecords,
+        title: AppStrings.viewStudents,
         child: SizedBox(
           child: (){
             if(viewStudentsNotifier.students.value.isEmpty){
-              return const SizedBox(
+              return const Center(child: SizedBox(
                   height: 50.0,
                   width: 50.0,
-                  child: CircularProgressIndicator());
+                  child: CircularProgressIndicator()));
             }
 
             return UserTable(viewStudentsNotifier: viewStudentsNotifier);

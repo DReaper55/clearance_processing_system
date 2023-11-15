@@ -25,14 +25,14 @@ class ViewFees extends HookConsumerWidget {
     }, []);
 
     return UCPSScaffold(
-        title: AppStrings.viewRecords,
+        title: AppStrings.viewFees,
         child: SizedBox(
           child: (){
             if(viewFeesNotifier.fees.value.isEmpty){
-              return const SizedBox(
+              return const Center(child: SizedBox(
                   height: 50.0,
                   width: 50.0,
-                  child: CircularProgressIndicator());
+                  child: CircularProgressIndicator()));
             }
 
             return UserTable(viewFeesNotifier: viewFeesNotifier);

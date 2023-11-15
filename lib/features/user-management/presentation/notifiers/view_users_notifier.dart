@@ -14,7 +14,7 @@ class ViewUsersNotifier extends ChangeNotifier {
   
   ViewUsersNotifier(this.ref);
   
-  void getUsers() async {
+  void getUsers() {
     final userRes = ref.read(getUsersUseCaseProvider).when(
         data: (value){
           return value;
@@ -23,7 +23,7 @@ class ViewUsersNotifier extends ChangeNotifier {
           return null;
         },
         loading: (){
-          print('Senddd 1');
+          Future.delayed(const Duration(seconds: 1), getUsers);
         },
     );
 

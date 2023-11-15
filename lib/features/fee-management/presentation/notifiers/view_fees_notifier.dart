@@ -14,7 +14,7 @@ class ViewFeesNotifier extends ChangeNotifier {
   
   ViewFeesNotifier(this.ref);
   
-  void getFees() async {
+  void getFees() {
     final feeRes = ref.read(getFeesUseCaseProvider).when(
         data: (value){
           return value;
@@ -23,7 +23,7 @@ class ViewFeesNotifier extends ChangeNotifier {
           return null;
         },
         loading: (){
-          print('Senddd 1');
+          Future.delayed(const Duration(seconds: 1), getFees);
         },
     );
 

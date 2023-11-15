@@ -28,10 +28,10 @@ class ViewUsers extends HookConsumerWidget {
         child: SizedBox(
           child: (){
             if(viewUsersNotifier.users.value.isEmpty){
-              return const SizedBox(
+              return const Center(child: SizedBox(
                   height: 50.0,
                   width: 50.0,
-                  child: CircularProgressIndicator());
+                  child: CircularProgressIndicator()));
             }
 
             return UserTable(viewUsersNotifier: viewUsersNotifier);

@@ -34,7 +34,7 @@ class AppStrings {
   static const createNewStudent = 'Register student';
   static const feeManagement = 'Fee management';
   static const postAFee = 'Post a fee';
-
+  static const viewFees = 'Fee records';
 }
 
 class ButtonStrings {

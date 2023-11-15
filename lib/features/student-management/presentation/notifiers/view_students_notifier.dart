@@ -23,7 +23,7 @@ class ViewStudentsNotifier extends ChangeNotifier {
           return null;
         },
         loading: (){
-          print('Senddd 1');
+          Future.delayed(const Duration(seconds: 1), getStudents);
         },
     );
 
