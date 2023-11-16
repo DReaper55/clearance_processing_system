@@ -27,6 +27,19 @@ class RequirementEntity extends Equatable {
     };
   }
 
+  RequirementEntity copyWith(
+      {String? requirementID, postedBy, feeID, description, dateTime,
+        String? title}) {
+    return RequirementEntity(
+      requirementID: requirementID ?? this.requirementID,
+      postedBy: postedBy ?? this.postedBy,
+      feeID: feeID ?? this.feeID,
+      description: description ?? this.description,
+      dateTime: dateTime ?? this.dateTime,
+      title: title ?? this.title,
+    );
+  }
+
   @override
   List<Object?> get props => [
     title, postedBy, feeID, description, requirementID, dateTime

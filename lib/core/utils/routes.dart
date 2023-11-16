@@ -18,6 +18,8 @@ import 'package:clearance_processing_system/features/user-management/presentatio
 import 'package:clearance_processing_system/features/wallet/presentation/pages/wallet.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/fee-management/presentation/pages/requirements_page.dart';
+
 class Routes {
   static const first = '/';
   static const onboard = '/onboardingView';
@@ -45,6 +47,8 @@ class Routes {
   static const myProfile = '/myProfile';
   static const wallet = '/wallet';
   static const clearance = '/clearance';
+
+  static const requirements = '/requirements';
 
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -89,6 +93,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const Wallet());
       case clearance:
         return MaterialPageRoute(builder: (_) => const Clearance());
+      case requirements:
+        return MaterialPageRoute(builder: (_) => const RequirementsPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

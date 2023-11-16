@@ -13,6 +13,7 @@ import '../../domain/enitites/fee_entity.dart';
 import '../../domain/enitites/paystack_bank.dart';
 import '../../domain/use-cases/paystack_bank_usecases.dart';
 import '../providers/paystack_bank_providers.dart';
+import '../widgets/add_requirement_dialog.dart';
 import '../widgets/paystack_banks_bottomsheet.dart';
 
 final createNewFeeNotifierProvider =
@@ -33,6 +34,8 @@ class FeeNotifier extends ChangeNotifier {
 
   final isCreating = ValueNotifier(false);
   final isLoadingAccNum = ValueNotifier(false);
+
+  final requirements = ValueNotifier<List<RequirementEntity>>([]);
 
   final selectedDepartments = ValueNotifier<List<Map<Departments, String>?>>([]);
   final listOfDepartments = [
@@ -93,7 +96,9 @@ class FeeNotifier extends ChangeNotifier {
     isCreating.value = true;
     notifyListeners();
 
-    final isSuccessful = await _saveFeeData();
+    final feeID = nanoid(6);
+
+    final isSuccessful = await _saveFeeData(feeID);
 
     isCreating.value = false;
     notifyListeners();
@@ -104,25 +109,27 @@ class FeeNotifier extends ChangeNotifier {
       return;
     }
 
-    if(isSuccessful && selectedDepartments.value.isNotEmpty){
-      final departments = selectedDepartments.value;
+    if(isSuccessful && requirements.value.isNotEmpty){
+      final mRequirements = requirements.value;
 
-      for(var department in departments){
-        // final data = RequirementEntity(
-        //   title: ,
-        //   feeID: ,
-        //   dateTime: ,
-        //   description: ,
-        //   postedBy: ,
-        //   requirementID: ,
-        // );
+      for(var mRequirement in mRequirements){
+        final data = mRequirement.copyWith(
+          postedBy: FirebaseAuth.instance.currentUser!.uid,
+          feeID: feeID,
+        );
+
+        try {
+          _saveRequirementData(data);
+        } on Exception {
+          debugPrintStack();
+        }
       }
     }
 
     showSuccess(text: 'Successfully created fee', context: context);
   }
 
-  Future<bool> _saveFeeData() async {
+  Future<bool> _saveFeeData(String feeID) async {
     String userUid = FirebaseAuth.instance.currentUser!.uid;
 
     final fee = FeeEntity(
@@ -134,7 +141,7 @@ class FeeNotifier extends ChangeNotifier {
       amount: amountController.text,
       bankCode: mSelectedBank.value!.code,
       bankName: mSelectedBank.value!.name,
-      feeID: nanoid(6),
+      feeID: feeID,
       title: titleController.text,
     );
 
@@ -156,7 +163,7 @@ class FeeNotifier extends ChangeNotifier {
     try {
       return await ref.read(addDataToFireStore(FireStoreParams(
         collectionName: FireStoreCollectionStrings.requirements,
-        uid: userUid,
+        uid: '$userUid-${data.feeID}-${data.requirementID}',
         data: data.toMap(),
       )).future);
     } catch (e, stack) {
@@ -235,5 +242,17 @@ class FeeNotifier extends ChangeNotifier {
     selectedDepartments.value.removeWhere((element) => element!.keys.first == department.keys.first);
 
     notifyListeners();
+  }
+
+  void addRequirementDialog(BuildContext context) async {
+    final requirement = await showDialog(
+    context: context,
+    builder: (ctx) => const AddRequirementDialog());
+
+    if(requirement is RequirementEntity){
+      requirements.value.add(requirement);
+
+      notifyListeners();
+    }
   }
 }

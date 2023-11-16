@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/utils/routes.dart';
 import '../notifiers/fee_notifier.dart';
 
 
@@ -94,6 +95,9 @@ class PostFee extends HookConsumerWidget {
               ),
 
               const Spacing.xLargeHeight(),
+              // ................................................
+              // List of selected departments
+              // ................................................
               if(createNewFeeNotifier.selectedDepartments.value.isNotEmpty)
                 SizedBox(
                   width: Helpers.width(context),
@@ -123,11 +127,44 @@ class PostFee extends HookConsumerWidget {
                 ),
 
               const Spacing.xLargeHeight(),
+              // ................................................
+              // Dropdown to select departments
+              // ................................................
               DropDownField(
                 values: createNewFeeNotifier.listOfDepartments,
                 label: "Which Department's students should pay this fee",
                 onChanged: createNewFeeNotifier.onDropdownChanged,
                 // currentValue: createNewFeeNotifier.selectedRole.value,
+              ),
+
+              // ................................................
+              // Requirements
+              // ................................................
+              const Spacing.xLargeHeight(),
+              Text(
+                'Requirements',
+                style: Styles.w400(color: Colors.black54),
+              ),
+              const Spacing.tinyHeight(),
+
+              // ................................................
+              // Add a requirement
+              // ................................................
+              ShrinkButton(
+                onTap: () => Navigator.of(context).pushNamed(Routes.requirements),
+                text: (){
+                  String text = 'Add a Requirement';
+
+                  if(createNewFeeNotifier.requirements.value.isNotEmpty){
+                    text = 'View ${createNewFeeNotifier.requirements.value.length} Requirements';
+                  }
+
+                  return text;
+                }(),
+                isExpanded: false,
+                hasBorder: true,
+                color: Colors.white,
+                textColor: UCPSColors.primary,
               ),
 
               const Spacing.xxLargeHeight(),
