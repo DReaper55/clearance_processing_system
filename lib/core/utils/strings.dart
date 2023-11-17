@@ -38,6 +38,7 @@ class AppStrings {
   static const requirements = 'Requirements';
   static const wallet = 'Wallet';
   static const transactionHistory = 'Transaction history';
+  static const myProfile = 'My profile';
 }
 
 class ButtonStrings {
