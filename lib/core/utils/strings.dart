@@ -37,6 +37,7 @@ class AppStrings {
   static const viewFees = 'Fee records';
   static const requirements = 'Requirements';
   static const wallet = 'Wallet';
+  static const transactionHistory = 'Transaction history';
 }
 
 class ButtonStrings {

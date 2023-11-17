@@ -42,7 +42,7 @@ class WalletNotifier extends ChangeNotifier {
         return;
       }
 
-      showSuccess(text: 'Funded wallet', context: context);
+      showSuccess(text: 'Funded wallet', context: context, duration: 5);
       return;
     }
 
@@ -66,7 +66,6 @@ class WalletNotifier extends ChangeNotifier {
     String userUid = FirebaseAuth.instance.currentUser!.uid;
 
     final payment = PaymentEntity(
-      feeID: nanoid(6),
       description: 'Fund wallet',
       dateTime: DateTime.now().toString(),
       amount: amount,
@@ -76,8 +75,8 @@ class WalletNotifier extends ChangeNotifier {
 
     try {
       return await ref.read(addDataToFireStore(FireStoreParams(
-        collectionName: FireStoreCollectionStrings.admin,
-        uid: userUid,
+        collectionName: FireStoreCollectionStrings.transactions,
+        uid: '$userUid-${payment.referenceCode}',
         data: payment.toMap(),
       )).future);
     } catch (e, stack) {

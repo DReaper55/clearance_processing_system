@@ -1,3 +1,4 @@
+import 'package:clearance_processing_system/core/helpers/extensions.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
 import 'package:clearance_processing_system/general_widgets/UCPSScaffold.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class TransactionHistory extends HookConsumerWidget {
     }, []);
 
     return UCPSScaffold(
-      title: AppStrings.viewRecords,
+      title: AppStrings.transactionHistory,
       child: SizedBox(
         child: (){
           if(transactionsNotifier.transactions.value.isEmpty){
@@ -52,7 +53,13 @@ class TransactionTable extends StatelessWidget {
     final userRecords = transactionsNotifier.transactions.value;
     List<DataRow> dataRows = userRecords.map((e) => DataRow(cells: [
       DataCell(Text(e.referenceCode!)),
-      DataCell(Text(e.amount!)),
+      DataCell(Text((){
+        if(e.amount != null){
+          return 'N${e.amount!.addComma()}';
+        }
+
+        return '';
+      }())),
       DataCell(Text(e.description!)),
       DataCell(Text(e.dateTime!)),
     ])).toList();

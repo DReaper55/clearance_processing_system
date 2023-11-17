@@ -113,6 +113,7 @@ class Helpers {
 void showError({
   required String text,
   required BuildContext context,
+  int? duration,
   void Function()? onFinished,
 }) {
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -120,6 +121,7 @@ void showError({
   Alert.showNotification(
     message: text,
     context: context,
+    duration: duration,
     notificationType: 1,
     onFinished: onFinished,
   );
@@ -128,6 +130,7 @@ void showError({
 void showSuccess({
   required String text,
   required BuildContext context,
+  int? duration,
   void Function()? onFinished,
 }) {
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -136,6 +139,7 @@ void showSuccess({
     message: text,
     context: context,
     notificationType: 0,
+    duration: duration,
     onFinished: onFinished,
   );
 }

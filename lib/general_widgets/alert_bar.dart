@@ -7,6 +7,7 @@ class Alert {
     int notificationType = 0,
     String message = "",
     SnackBarAction? action,
+    int? duration,
     required BuildContext context,
     void Function()? onFinished,
   }) {
@@ -21,7 +22,7 @@ class Alert {
       behavior: SnackBarBehavior.floating,
       content: Text(message,
           style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: duration ?? 2),
       action: action,
     ));
   }
