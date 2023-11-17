@@ -6,6 +6,7 @@ import 'package:clearance_processing_system/features/fee-management/presentation
 import 'package:clearance_processing_system/features/fee-management/presentation/pages/view_fees.dart';
 import 'package:clearance_processing_system/features/homepage/presentation/pages/homepage.dart';
 import 'package:clearance_processing_system/features/homepage/presentation/pages/side_nav_pages.dart';
+import 'package:clearance_processing_system/features/homepage/presentation/pages/student_nav_pages.dart';
 import 'package:clearance_processing_system/features/login/presentation/pages/login.dart';
 import 'package:clearance_processing_system/features/my-profile/presentation/pages/my_profile.dart';
 import 'package:clearance_processing_system/features/register/presentation/pages/register.dart';
@@ -15,6 +16,8 @@ import 'package:clearance_processing_system/features/student-management/presenta
 import 'package:clearance_processing_system/features/user-management/presentation/pages/create_new_user.dart';
 import 'package:clearance_processing_system/features/user-management/presentation/pages/user_management.dart';
 import 'package:clearance_processing_system/features/user-management/presentation/pages/view_users.dart';
+import 'package:clearance_processing_system/features/wallet/presentation/pages/fund_wallet.dart';
+import 'package:clearance_processing_system/features/wallet/presentation/pages/transaction_history.dart';
 import 'package:clearance_processing_system/features/wallet/presentation/pages/wallet.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +33,7 @@ class Routes {
   static const homepage = '/homepage';
 
   static const sideNavPages = '/sideNavPages';
+  static const studentNavPages = '/studentNavPages';
   static const dashboard = '/dashboard';
 
   static const studentManagement = '/studentManagement';
@@ -45,7 +49,11 @@ class Routes {
   static const viewFees = '/viewFees';
 
   static const myProfile = '/myProfile';
+
   static const wallet = '/wallet';
+  static const fundWallet = '/fundWallet';
+  static const transactionHistory = '/transactionHistory';
+
   static const clearance = '/clearance';
 
   static const requirements = '/requirements';
@@ -69,6 +77,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const Dashboard());
       case sideNavPages:
         return MaterialPageRoute(builder: (_) => const SideNavPages());
+      case studentNavPages:
+        return MaterialPageRoute(builder: (_) => const StudentNavPages());
       case studentManagement:
         return MaterialPageRoute(builder: (_) => const StudentManagement());
       case createStudent:
@@ -91,6 +101,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const MyProfile());
       case wallet:
         return MaterialPageRoute(builder: (_) => const Wallet());
+      case fundWallet:
+        return MaterialPageRoute(builder: (_) => const FundWallet());
+      case transactionHistory:
+        return MaterialPageRoute(builder: (_) => const TransactionHistory());
       case clearance:
         return MaterialPageRoute(builder: (_) => const Clearance());
       case requirements:

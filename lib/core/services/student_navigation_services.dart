@@ -8,23 +8,11 @@ final currentPageProvider = StateProvider<String>((ref) => Routes.dashboard);
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
 final navigatorKeysProvider = Provider<Map<String, GlobalKey<NavigatorState>>>((ref) {
-  final isStudent = ref.read(userIsStudentStateNotifier.state).state;
-
-  // print('Senddd 0: $isStudent');
-  if(!isStudent){
-    return {
-      Routes.dashboard: GlobalKey<NavigatorState>(),
-      Routes.myProfile: GlobalKey<NavigatorState>(),
-      Routes.clearance: GlobalKey<NavigatorState>(),
-      Routes.wallet: GlobalKey<NavigatorState>(),
-    };
-  }
-
   return {
     Routes.dashboard: GlobalKey<NavigatorState>(),
-    Routes.userManagement: GlobalKey<NavigatorState>(),
-    Routes.studentManagement: GlobalKey<NavigatorState>(),
-    Routes.feeManagement: GlobalKey<NavigatorState>(),
+    Routes.myProfile: GlobalKey<NavigatorState>(),
+    Routes.clearance: GlobalKey<NavigatorState>(),
+    Routes.wallet: GlobalKey<NavigatorState>(),
   };
 });
 
@@ -117,4 +105,4 @@ class NavigationService {
   }
 }
 
-final newNavigationService = Provider((ref) => NavigationService(ref));
+final studentNavigationService = Provider((ref) => NavigationService(ref));

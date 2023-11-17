@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../core/utils/routes.dart';
+import '../features/login/presentation/notifiers/login_notifier.dart';
 
 class NavigationRailWidget extends HookConsumerWidget {
   final StateController<int> currentIndex;
@@ -43,12 +44,27 @@ class NavigationRailWidget extends HookConsumerWidget {
           onTap!();
         },
         selectedIndex: currentIndex.state,
-      destinations: const [
-        NavigationRailDestination(icon: Icon(Icons.home_outlined, color: Colors.grey,), label: Text('Home'), selectedIcon: Icon(Icons.home, color: UCPSColors.primary,)),
-        NavigationRailDestination(icon: Icon(Icons.people_alt_outlined, color: Colors.grey,), label: Text('User Management'), selectedIcon: Icon(Icons.people_alt, color: UCPSColors.primary)),
-        NavigationRailDestination(icon: Icon(Icons.book_outlined, color: Colors.grey,), label: Text('Student Management'), selectedIcon: Icon(Icons.book, color: UCPSColors.primary)),
-        NavigationRailDestination(icon: Icon(Icons.attach_money, color: Colors.grey,), label: Text('Fee Management'), selectedIcon: Icon(Icons.attach_money_sharp, color: UCPSColors.primary)),
-      ],
+      destinations: _getDestinations(ref),
     );
+  }
+
+  List<NavigationRailDestination> _getDestinations(WidgetRef ref) {
+    final isStudent = ref.read(userIsStudentStateNotifier.state).state;
+
+    if(isStudent){
+      return const [
+        NavigationRailDestination(icon: Icon(Icons.home_outlined, color: Colors.grey,), label: Text('Home'), selectedIcon: Icon(Icons.home, color: UCPSColors.primary,)),
+        NavigationRailDestination(icon: Icon(Icons.people_alt_outlined, color: Colors.grey,), label: Text('My profile'), selectedIcon: Icon(Icons.people_alt, color: UCPSColors.primary)),
+        NavigationRailDestination(icon: Icon(Icons.book_outlined, color: Colors.grey,), label: Text('Clearance'), selectedIcon: Icon(Icons.book, color: UCPSColors.primary)),
+        NavigationRailDestination(icon: Icon(Icons.attach_money, color: Colors.grey,), label: Text('Wallet'), selectedIcon: Icon(Icons.attach_money_sharp, color: UCPSColors.primary)),
+      ];
+    }
+
+    return const [
+      NavigationRailDestination(icon: Icon(Icons.home_outlined, color: Colors.grey,), label: Text('Home'), selectedIcon: Icon(Icons.home, color: UCPSColors.primary,)),
+      NavigationRailDestination(icon: Icon(Icons.people_alt_outlined, color: Colors.grey,), label: Text('User Management'), selectedIcon: Icon(Icons.people_alt, color: UCPSColors.primary)),
+      NavigationRailDestination(icon: Icon(Icons.book_outlined, color: Colors.grey,), label: Text('Student Management'), selectedIcon: Icon(Icons.book, color: UCPSColors.primary)),
+      NavigationRailDestination(icon: Icon(Icons.attach_money, color: Colors.grey,), label: Text('Fee Management'), selectedIcon: Icon(Icons.attach_money_sharp, color: UCPSColors.primary)),
+    ];
   }
 }

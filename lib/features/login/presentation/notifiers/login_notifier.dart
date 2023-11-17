@@ -12,6 +12,8 @@ import '../../../register/presentation/notifiers/register_notifier.dart';
 final loginNotifierProvider =
     ChangeNotifierProvider((ref) => LoginNotifier(ref));
 
+final userIsStudentStateNotifier = StateProvider<bool>((ref) => false);
+
 class LoginNotifier extends ChangeNotifier {
   final Ref ref;
 
@@ -25,6 +27,14 @@ class LoginNotifier extends ChangeNotifier {
 
   void toggleUserType(bool? value) {
     isStudent.value = !isStudent.value;
+    notifyListeners();
+  }
+
+  void resetData() {
+    emailController.clear();
+    passwordController.clear();
+    isStudent.value = false;
+
     notifyListeners();
   }
 
@@ -53,8 +63,19 @@ class LoginNotifier extends ChangeNotifier {
 
       ref.read(authCredState.state).state = appUser.credential;
 
-      ref.read(navigationService).navigateToNamed(Routes.sideNavPages);
-      return;
+      ref.read(userIsStudentStateNotifier.state).state = isStudent.value;
+
+      resetData();
+
+      Future.delayed(const Duration(seconds: 1), (){
+        /*if(isStudent.value){
+          ref.read(navigationService).navigateToNamed(Routes.studentNavPages);
+          return;
+        }*/
+
+        ref.read(navigationService).navigateToNamed(Routes.sideNavPages);
+        return;
+      });
 
     } on FirebaseAuthException catch (ex) {
       isCreating.value = false;

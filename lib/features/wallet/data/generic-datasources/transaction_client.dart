@@ -38,13 +38,13 @@ class TransactionClient {
   }
 
   Future<http.Response> verifyTransaction({required String reference}) async {
-    /*Map<String, String> headers = {
-      'Authorization': 'Bearer sk_test_e618beb4ffd4a7c74c7d5a898e3e8dbdb8be47dc'
-    };*/
-
     Map<String, String> headers = {
-      'Authorization': 'Bearer ${dotenv.env[Keys.payStackSk]}'
+      'Authorization': 'Bearer sk_test_547631aa8507cfa5841d9d608e7fd832687b92f7'
     };
+
+    /*Map<String, String> headers = {
+      'Authorization': 'Bearer ${dotenv.env[Keys.payStackSk]}'
+    };*/
 
     var httpClient = http.Client();
     var uri = Uri.https('api.paystack.co', '/transaction/verify/$reference');

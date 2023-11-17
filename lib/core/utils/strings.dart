@@ -36,6 +36,7 @@ class AppStrings {
   static const postAFee = 'Post a fee';
   static const viewFees = 'Fee records';
   static const requirements = 'Requirements';
+  static const wallet = 'Wallet';
 }
 
 class ButtonStrings {
@@ -83,6 +84,7 @@ class FireStoreCollectionStrings {
   static const students = 'students';
   static const fees = 'fees';
   static const requirements = 'requirements';
+  static const transactions = 'transactions';
 }
 
 class FBRealtimeDBCollectionStrings {
