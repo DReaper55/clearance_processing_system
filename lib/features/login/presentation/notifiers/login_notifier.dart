@@ -3,6 +3,10 @@ import 'package:clearance_processing_system/core/helpers/helpers_functions.dart'
 import 'package:clearance_processing_system/core/services/navigation_services.dart';
 import 'package:clearance_processing_system/core/utils/routes.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
+import 'package:clearance_processing_system/features/register/domain/entities/user.dart';
+import 'package:clearance_processing_system/features/student-management/domain/entities/student.dart';
+import 'package:clearance_processing_system/features/student-management/presentation/providers/student_data_provider.dart';
+import 'package:clearance_processing_system/features/user-management/presentation/providers/admin_data_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +17,12 @@ final loginNotifierProvider =
     ChangeNotifierProvider((ref) => LoginNotifier(ref));
 
 final userIsStudentStateNotifier = StateProvider<bool>((ref) => false);
+
+final studentEntityState =
+StateProvider<StudentEntity?>((ref) => const StudentEntity());
+
+final userEntityState =
+StateProvider<UserEntity?>((ref) => const UserEntity());
 
 class LoginNotifier extends ChangeNotifier {
   final Ref ref;
@@ -30,7 +40,7 @@ class LoginNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetData() {
+  void _resetData() {
     emailController.clear();
     passwordController.clear();
     isStudent.value = false;
@@ -65,7 +75,9 @@ class LoginNotifier extends ChangeNotifier {
 
       ref.read(userIsStudentStateNotifier.state).state = isStudent.value;
 
-      resetData();
+      _resetData();
+
+      _setUserData();
 
       Future.delayed(const Duration(seconds: 1), (){
         /*if(isStudent.value){
@@ -89,5 +101,20 @@ class LoginNotifier extends ChangeNotifier {
 
   void navigateToRegistrationPage() {
     ref.read(navigationService).navigateToNamed(Routes.register);
+  }
+
+  void _setUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if(user == null) return;
+
+    if(isStudent.value){
+      final mUser = await ref.read(studentRepositoryProvider).getOneStudents(user.uid);
+      ref.read(studentEntityState.state).state = StudentEntity.fromMap(mUser);
+      return;
+    }
+
+    final mUser = await ref.read(userRepositoryProvider).getOneUser(user.uid);
+    ref.read(userEntityState.state).state = UserEntity.fromMap(mUser);
+    return;
   }
 }

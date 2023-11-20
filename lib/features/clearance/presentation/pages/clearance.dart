@@ -58,14 +58,27 @@ class Clearance extends HookConsumerWidget {
                                   style: ButtonStyle(
                                       padding: MaterialStateProperty.all(
                                           const EdgeInsets.symmetric(
-                                              vertical: Dimensions.medium, horizontal: Dimensions.mediumBig)),
+                                              vertical: Dimensions.medium,
+                                              horizontal:
+                                                  Dimensions.mediumBig)),
                                       shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(10.0)))),
-                                  onPressed: () => clearanceNotifier.navigateToRequirementPage(feeCat),
+                                                  BorderRadius.circular(
+                                                      10.0)))),
+                                  onPressed: () => clearanceNotifier
+                                      .navigateToRequirementPage(feeCat),
                                   child: const Text("View requirements")),
-                              ElevatedButton(
+                              if (feeCat.isPaid == null || !feeCat.isPaid!)
+                                ShrinkButton(
+                                  text:
+                                      "Pay N${feeCat.feeEntity!.amount!.addComma()}",
+                                  onTap: () =>
+                                      clearanceNotifier.pay(feeCat, context),
+                                  isLoading:
+                                      clearanceNotifier.isMakingPayment.value,
+                                ),
+                              /*ElevatedButton(
                                   style: ButtonStyle(
                                       padding: MaterialStateProperty.all(
                                           const EdgeInsets.symmetric(
@@ -76,8 +89,8 @@ class Clearance extends HookConsumerWidget {
                                           RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0)))),
-                                  onPressed: () {},
-                                  child: Text("Pay N${feeCat.feeEntity!.amount!.addComma()}")),
+                                  onPressed: () => clearanceNotifier.pay(feeCat, context),
+                                  child: Text()),*/
                             ],
                           ),
                         ),
@@ -90,16 +103,17 @@ class Clearance extends HookConsumerWidget {
               ),
             ),
             const Divider(),
-
             Expanded(
               flex: 1,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Total: N${clearanceNotifier.totalFee.value.toString().addComma()}'),
+                  Text(
+                      'Total: N${clearanceNotifier.totalFee.value.toString().addComma()}'),
                   ShrinkButton(
-                    onTap: (){},
-                    text: 'Pay N${clearanceNotifier.totalFee.value.toString().addComma()}',
+                    onTap: () {},
+                    text:
+                        'Pay N${clearanceNotifier.totalFee.value.toString().addComma()}',
                   )
                 ],
               ),

@@ -1,9 +1,8 @@
-import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:clearance_processing_system/core/utils/strings.dart';
 import 'package:clearance_processing_system/features/clearance/domain/fee_category.dart';
 import 'package:clearance_processing_system/features/clearance/domain/uploaded_req_entity.dart';
-import 'package:clearance_processing_system/features/fee-management/domain/enitites/requirement_entity.dart';
 import 'package:clearance_processing_system/features/register/domain/use-cases/vendor_firestore_usecases.dart';
 import 'package:clearance_processing_system/features/register/presentation/providers/save_data_to_firebase_providers.dart';
 import 'package:file_picker/file_picker.dart';
@@ -45,7 +44,9 @@ class StudentReqNotifier extends ChangeNotifier {
       final foundReq = uploadedReqs.firstWhere((element) => element.requirementID == feeCat.value.requirementEntities![i].requirementID, orElse: () => const UploadedReqEntity());
 
       if(foundReq.id != null){
-        feeCat.value.requirementEntities![i].copyWith(uploadedReqEntity: foundReq);
+        // final mFoundReq = foundReq.copyWith(imageFile: await loadImage(foundReq.imageUrl!));
+
+        feeCat.value.requirementEntities![i] = feeCat.value.requirementEntities![i].copyWith(uploadedReqEntity: foundReq);
       }
     }
 
@@ -108,6 +109,23 @@ class StudentReqNotifier extends ChangeNotifier {
     } catch (e, stack) {
       debugPrintStack(stackTrace: stack);
       return false;
+    }
+  }
+
+  Future<Uint8List> loadImage(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return Uint8List.fromList(response.bodyBytes);
+      } else {
+        // Handle error, e.g., image not found
+        print('Failed to load image: ${response.statusCode}');
+        return Uint8List(0);
+      }
+    } catch (error) {
+      // Handle network error
+      print('Network error: $error');
+      throw Exception(error);
     }
   }
 }

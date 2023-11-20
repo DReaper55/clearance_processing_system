@@ -10,4 +10,11 @@ class AdminRepository {
 
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
+
+  Future<Map<String, dynamic>> getOneUser(String uid) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await _firestore.collection(FireStoreCollectionStrings.admin).where('uid', isEqualTo: uid).get();
+
+    return querySnapshot.docs.map((doc) => doc.data()).toList().first;
+  }
 }

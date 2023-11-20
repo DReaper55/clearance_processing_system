@@ -10,4 +10,11 @@ class StudentRepository {
 
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
+
+  Future<Map<String, dynamic>> getOneStudents(String uid) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await _firestore.collection(FireStoreCollectionStrings.students).where('uid', isEqualTo: uid).get();
+
+    return querySnapshot.docs.map((doc) => doc.data()).toList().first;
+  }
 }

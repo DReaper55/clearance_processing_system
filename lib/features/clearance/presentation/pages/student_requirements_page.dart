@@ -2,6 +2,7 @@ import 'package:clearance_processing_system/core/helpers/helpers_functions.dart'
 import 'package:clearance_processing_system/core/utils/dimensions.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
 import 'package:clearance_processing_system/general_widgets/UCPSScaffold.dart';
+import 'package:clearance_processing_system/general_widgets/custom-widgets/custom_network_image.dart';
 import 'package:clearance_processing_system/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -67,7 +68,10 @@ class StudentRequirementsPage extends HookConsumerWidget {
                             width: 50.0,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(Dimensions.small),
-                              image: DecorationImage(image: NetworkImage(uploadedReq.imageUrl!))
+                            ),
+                            child: CustomNetworkImage(
+                              src: uploadedReq.imageUrl!,
+                              boxFit: BoxFit.cover,
                             ),
                           ),
 

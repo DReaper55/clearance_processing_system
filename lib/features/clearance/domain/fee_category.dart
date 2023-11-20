@@ -7,18 +7,21 @@ import 'uploaded_req_entity.dart';
 class FeeCategory extends Equatable {
   final FeeEntity? feeEntity;
   final List<RequirementEntity>? requirementEntities;
+  final bool? isPaid;
 
-  const FeeCategory({this.feeEntity, this.requirementEntities});
+  const FeeCategory({this.feeEntity, this.requirementEntities, this.isPaid});
 
   FeeCategory copyWith(
       {FeeEntity? feeEntity,
+        bool? isPaid,
         List<RequirementEntity>? requirementEntities}) {
     return FeeCategory(
       feeEntity: feeEntity ?? this.feeEntity,
+      isPaid: isPaid ?? this.isPaid,
       requirementEntities: requirementEntities ?? this.requirementEntities,
     );
   }
 
   @override
-  List<Object?> get props => [ feeEntity, requirementEntities ];
+  List<Object?> get props => [ feeEntity, isPaid, requirementEntities ];
 }
