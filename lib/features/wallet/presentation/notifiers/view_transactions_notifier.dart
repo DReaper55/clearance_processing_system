@@ -15,19 +15,7 @@ class ViewTransactionsNotifier extends ChangeNotifier {
   ViewTransactionsNotifier(this.ref);
   
   void getTransactions() async {
-    final transactionRes = ref.read(getTransactionsUseCaseProvider).when(
-        data: (value){
-          return value;
-        },
-        error: (err, __){
-          return null;
-        },
-        loading: (){
-          Future.delayed(const Duration(seconds: 1), getTransactions);
-        },
-    );
-
-    if(transactionRes == null) return;
+    final transactionRes = await ref.read(transactionRepositoryProvider).getTransactions();
 
     transactions.value = transactionRes.map((e) => PaymentEntity.fromMap(e)).toList();
 

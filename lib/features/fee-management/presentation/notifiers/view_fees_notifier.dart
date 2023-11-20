@@ -14,20 +14,8 @@ class ViewFeesNotifier extends ChangeNotifier {
 
   ViewFeesNotifier(this.ref);
   
-  void getFees() {
-    final feeRes = ref.read(getFeesUseCaseProvider).when(
-        data: (value){
-          return value;
-        },
-        error: (err, __){
-          return null;
-        },
-        loading: (){
-          Future.delayed(const Duration(seconds: 1), getFees);
-        },
-    );
-
-    if(feeRes == null) return;
+  void getFees() async {
+    final feeRes = await ref.read(feeRepositoryProvider).getFees();
 
     fees.value = feeRes.map((e) => FeeEntity.fromMap(e)).toList();
 

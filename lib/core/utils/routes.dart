@@ -1,5 +1,6 @@
 
 import 'package:clearance_processing_system/features/clearance/presentation/pages/clearance.dart';
+import 'package:clearance_processing_system/features/clearance/presentation/pages/student_requirements_page.dart';
 import 'package:clearance_processing_system/features/dashboard/presentation/pages/dashboard.dart';
 import 'package:clearance_processing_system/features/fee-management/presentation/pages/fee_management.dart';
 import 'package:clearance_processing_system/features/fee-management/presentation/pages/post_fee.dart';
@@ -55,6 +56,7 @@ class Routes {
   static const transactionHistory = '/transactionHistory';
 
   static const clearance = '/clearance';
+  static const studentReqPage = '/studentReqPage';
 
   static const requirements = '/requirements';
 
@@ -107,6 +109,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const TransactionHistory());
       case clearance:
         return MaterialPageRoute(builder: (_) => const Clearance());
+      case studentReqPage:
+        return MaterialPageRoute(builder: (_) => const StudentRequirementsPage());
       case requirements:
         return MaterialPageRoute(builder: (_) => const RequirementsPage());
       default:

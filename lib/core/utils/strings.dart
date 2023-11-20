@@ -39,6 +39,7 @@ class AppStrings {
   static const wallet = 'Wallet';
   static const transactionHistory = 'Transaction history';
   static const myProfile = 'My profile';
+  static const clearance = 'Clearance';
 }
 
 class ButtonStrings {
@@ -86,6 +87,7 @@ class FireStoreCollectionStrings {
   static const students = 'students';
   static const fees = 'fees';
   static const requirements = 'requirements';
+  static const uploadedRequirements = 'uploadedRequirements';
   static const transactions = 'transactions';
 }
 

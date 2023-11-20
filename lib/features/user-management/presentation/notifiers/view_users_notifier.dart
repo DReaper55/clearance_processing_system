@@ -14,20 +14,8 @@ class ViewUsersNotifier extends ChangeNotifier {
   
   ViewUsersNotifier(this.ref);
   
-  void getUsers() {
-    final userRes = ref.read(getUsersUseCaseProvider).when(
-        data: (value){
-          return value;
-        },
-        error: (err, __){
-          return null;
-        },
-        loading: (){
-          Future.delayed(const Duration(seconds: 1), getUsers);
-        },
-    );
-
-    if(userRes == null) return;
+  void getUsers() async {
+    final userRes = await ref.read(userRepositoryProvider).getUsers();
 
     users.value = userRes.map((e) => UserEntity.fromMap(e)).toList();
 

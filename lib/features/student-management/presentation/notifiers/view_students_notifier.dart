@@ -15,19 +15,7 @@ class ViewStudentsNotifier extends ChangeNotifier {
   ViewStudentsNotifier(this.ref);
   
   void getStudents() async {
-    final studentRes = ref.read(getStudentsUseCaseProvider).when(
-        data: (value){
-          return value;
-        },
-        error: (err, __){
-          return null;
-        },
-        loading: (){
-          Future.delayed(const Duration(seconds: 1), getStudents);
-        },
-    );
-
-    if(studentRes == null) return;
+    final studentRes = await ref.read(studentRepositoryProvider).getStudents();
 
     students.value = studentRes.map((e) => StudentEntity.fromMap(e)).toList();
 

@@ -38,6 +38,7 @@ dependencies:
   flutter_hooks: ^0.18.5+1
   image_picker: ^0.8.5+3
   flutter_dotenv: ^5.0.2
+  file_picker: ^5.2.1
   nanoid: ^1.0.0
   url_launcher: ^6.0.20
   shared_preferences: ^2.1.1
