@@ -1,5 +1,8 @@
 import 'package:clearance_processing_system/core/helpers/helpers_functions.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
+import 'package:clearance_processing_system/features/login/presentation/notifiers/login_notifier.dart';
+import 'package:clearance_processing_system/features/student-management/domain/entities/student.dart';
+import 'package:clearance_processing_system/features/student-management/presentation/providers/student_data_provider.dart';
 import 'package:clearance_processing_system/features/wallet/domain/enitites/payment.dart';
 import 'package:clearance_processing_system/features/wallet/presentation/notifiers/payment_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,6 +45,8 @@ class WalletNotifier extends ChangeNotifier {
         return;
       }
 
+      _saveStudentWalletBalance(amount);
+
       showSuccess(text: 'Funded wallet', context: context, duration: 5);
       return;
     }
@@ -78,6 +83,29 @@ class WalletNotifier extends ChangeNotifier {
         collectionName: FireStoreCollectionStrings.transactions,
         uid: '$userUid-${payment.referenceCode}',
         data: payment.toMap(),
+      )).future);
+    } catch (e, stack) {
+      debugPrintStack(stackTrace: stack);
+      return false;
+    }
+  }
+
+  Future<bool> _saveStudentWalletBalance(String amount) async {
+    StudentEntity? student = ref.read(studentEntityState.state).state;
+
+    if(student == null || student.cashInWallet == null){
+      final mStudent = await ref.read(studentRepositoryProvider).getOneStudents(FirebaseAuth.instance.currentUser!.uid);
+
+      student = StudentEntity.fromMap(mStudent);
+    }
+
+    student = student.copyWith(cashInWallet: amount);
+
+    try {
+      return await ref.read(updateDataInFireStore(FireStoreParams(
+        collectionName: FireStoreCollectionStrings.students,
+        uid: student.uid!,
+        data: student.toMap(),
       )).future);
     } catch (e, stack) {
       debugPrintStack(stackTrace: stack);

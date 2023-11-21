@@ -5,20 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../notifiers/view_transactions_notifier.dart';
+import '../notifiers/clearance_payment_notifier.dart';
 
 
-class TransactionHistory extends HookConsumerWidget {
-  const TransactionHistory({super.key});
+
+class ClearancePayments extends HookConsumerWidget {
+  const ClearancePayments({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final transactionsNotifier = ref.watch(viewTransactionsNotifierProvider);
+    final clearancePaymentNotifier = ref.watch(clearancePaymentNotifierProvider);
 
     useEffect(() {
 
       Future.delayed(const Duration(milliseconds: 500), () {
-        transactionsNotifier.getTransactions();
+        clearancePaymentNotifier.setData();
       });
 
       return () {
@@ -26,17 +27,17 @@ class TransactionHistory extends HookConsumerWidget {
     }, []);
 
     return UCPSScaffold(
-      title: AppStrings.transactionHistory,
+      title: AppStrings.clearancePayments,
       child: SizedBox(
         child: (){
-          if(transactionsNotifier.transactions.value.isEmpty){
+          if(clearancePaymentNotifier.clearancePayments.value.isEmpty){
             return const Center(child: SizedBox(
                 height: 50.0,
                 width: 50.0,
                 child: CircularProgressIndicator()));
           }
 
-          return _TransactionTable(transactionsNotifier: transactionsNotifier);
+          return _TransactionTable(clearancePaymentNotifier: clearancePaymentNotifier);
         }(),
       ),
     );
@@ -44,24 +45,27 @@ class TransactionHistory extends HookConsumerWidget {
 }
 
 class _TransactionTable extends StatelessWidget {
-  final ViewTransactionsNotifier transactionsNotifier;
+  final ClearancePaymentNotifier clearancePaymentNotifier;
 
-  const _TransactionTable({super.key, required this.transactionsNotifier});
+  const _TransactionTable({required this.clearancePaymentNotifier});
 
   @override
   Widget build(BuildContext context) {
-    final userRecords = transactionsNotifier.transactions.value;
+    final userRecords = clearancePaymentNotifier.clearancePayments.value;
     List<DataRow> dataRows = userRecords.map((e) => DataRow(cells: [
-      DataCell(Text(e.referenceCode!)),
+      DataCell(Text(e.paymentEntity!.referenceCode!)),
       DataCell(Text((){
-        if(e.amount != null){
-          return 'N${e.amount!.addComma()}';
+        if(e.paymentEntity!.amount != null){
+          return 'N${e.paymentEntity!.amount!.addComma()}';
         }
 
         return '';
       }())),
-      DataCell(Text(e.description!)),
-      DataCell(Text(e.dateTime!)),
+      DataCell(Text(e.paymentEntity!.description!)),
+      DataCell(Text(e.feeEntity!.title ?? '')),
+      DataCell(Text(e.studentEntity!.fullName!)),
+      DataCell(Text(e.studentEntity!.matric!)),
+      DataCell(Text(e.paymentEntity!.dateTime!)),
     ])).toList();
 
 
@@ -73,7 +77,10 @@ class _TransactionTable extends StatelessWidget {
           DataColumn(label: Text("Reference code")),
           DataColumn(label: Text("Amount")),
           DataColumn(label: Text("Description")),
-          DataColumn(label: Text("Date created")),
+          DataColumn(label: Text("Clearance")),
+          DataColumn(label: Text("Student's name")),
+          DataColumn(label: Text("Student's matric")),
+          DataColumn(label: Text("Date paid")),
         ],
       ),
     );

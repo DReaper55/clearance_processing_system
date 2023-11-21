@@ -185,7 +185,7 @@ class ClearanceNotifier extends ChangeNotifier {
       dateTime: DateTime.now().toString(),
       amount: amount,
       feeID: feeCat.feeEntity!.feeID!,
-      referenceCode: refCode ?? nanoid(6),
+      referenceCode: refCode ?? nanoid(10),
       userID: userUid,
     );
 

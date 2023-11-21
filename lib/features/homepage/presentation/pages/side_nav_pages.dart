@@ -75,7 +75,7 @@ class SideNavPages extends HookConsumerWidget {
   }
 
   List<String> _getPageKeys(ref, bool isStudent) {
-    if(!isStudent){
+    if(isStudent){
       return [ Routes.dashboard, Routes.myProfile, Routes.clearance, Routes.wallet ];
     }
 
@@ -83,7 +83,7 @@ class SideNavPages extends HookConsumerWidget {
   }
 
   List<Widget> _getPageWidgets(ref, String currentPage, bool isStudent) {
-    if(!isStudent){
+    if(isStudent){
       return <Widget>[
         _buildOffstageNavigator(ref, Routes.dashboard, currentPage),
         _buildOffstageNavigator(ref, Routes.myProfile, currentPage),

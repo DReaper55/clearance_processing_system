@@ -3,10 +3,12 @@ import 'package:clearance_processing_system/core/helpers/helpers_functions.dart'
 import 'package:clearance_processing_system/core/utils/strings.dart';
 import 'package:clearance_processing_system/general_widgets/UCPSScaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../general_widgets/spacing.dart';
 import '../../../login/presentation/notifiers/login_notifier.dart';
+import '../notifiers/dashboard_notifier.dart';
 import '../widgets/infographic_card.dart';
 
 class Dashboard extends HookConsumerWidget {
@@ -15,6 +17,16 @@ class Dashboard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isStudent = ref.watch(userIsStudentStateNotifier.state);
+
+    final dashboardNotifier = ref.watch(dashboardNotifierProvider);
+
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        dashboardNotifier.setData();
+      });
+
+      return () {};
+    }, []);
 
     return UCPSScaffold(
       title: AppStrings.dashboard,
@@ -25,8 +37,8 @@ class Dashboard extends HookConsumerWidget {
           children: [
             const Spacing.xLargeHeight(),
 
-            if(!isStudent.state)
-              const _StudentDashboard()
+            if(isStudent.state)
+              _StudentDashboard(dashboardNotifier: dashboardNotifier,)
             else
               const _AdminDashboard(),
           ],
@@ -37,7 +49,9 @@ class Dashboard extends HookConsumerWidget {
 }
 
 class _StudentDashboard extends StatelessWidget {
-  const _StudentDashboard({super.key});
+  final DashboardNotifier dashboardNotifier;
+
+  const _StudentDashboard({super.key, required this.dashboardNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +63,7 @@ class _StudentDashboard extends StatelessWidget {
           titleText: 'Clearance processed',
         ),
         InfographicCard(
-          bodyText: 'N ${'0.00'.addComma()}',
+          bodyText: 'N ${dashboardNotifier.cashInWallet.value.addComma()}',
           titleText: 'Wallet balance',
         ),
       ],

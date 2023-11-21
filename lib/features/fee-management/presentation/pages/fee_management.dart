@@ -36,6 +36,16 @@ class FeeManagement extends HookConsumerWidget {
               hasIcon: true,
               onTap: () => Navigator.of(context).pushNamed(Routes.viewFees),
             ),
+            const Spacing.largeWidth(),
+            const Spacing.largeHeight(),
+
+            ShrinkButton(
+              hasBorder: true,
+              text: 'View Clearance payments',
+              icon: const Icon(Icons.attach_money),
+              hasIcon: true,
+              onTap: () => Navigator.of(context).pushNamed(Routes.clearancePayments),
+            ),
           ],
         ),
       ),

@@ -21,4 +21,12 @@ class ViewTransactionsNotifier extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void getAllTransactions() async {
+    final transactionRes = await ref.read(transactionRepositoryProvider).getAllTransactions();
+
+    transactions.value = transactionRes.map((e) => PaymentEntity.fromMap(e)).toList();
+
+    notifyListeners();
+  }
 }

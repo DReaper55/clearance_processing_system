@@ -4,6 +4,7 @@ import 'package:clearance_processing_system/features/clearance/presentation/page
 import 'package:clearance_processing_system/features/dashboard/presentation/pages/dashboard.dart';
 import 'package:clearance_processing_system/features/fee-management/presentation/pages/fee_management.dart';
 import 'package:clearance_processing_system/features/fee-management/presentation/pages/post_fee.dart';
+import 'package:clearance_processing_system/features/fee-management/presentation/pages/view_clearance_payments.dart';
 import 'package:clearance_processing_system/features/fee-management/presentation/pages/view_fees.dart';
 import 'package:clearance_processing_system/features/homepage/presentation/pages/homepage.dart';
 import 'package:clearance_processing_system/features/homepage/presentation/pages/side_nav_pages.dart';
@@ -48,6 +49,7 @@ class Routes {
   static const feeManagement = '/feeManagement';
   static const postAFee = '/postAFee';
   static const viewFees = '/viewFees';
+  static const clearancePayments = '/clearancePayments';
 
   static const myProfile = '/myProfile';
 
@@ -99,6 +101,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const PostFee());
       case viewFees:
         return MaterialPageRoute(builder: (_) => const ViewFees());
+      case clearancePayments:
+        return MaterialPageRoute(builder: (_) => const ClearancePayments());
       case myProfile:
         return MaterialPageRoute(builder: (_) => const MyProfile());
       case wallet:

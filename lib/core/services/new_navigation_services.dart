@@ -10,8 +10,7 @@ final selectedIndexProvider = StateProvider<int>((ref) => 0);
 final navigatorKeysProvider = Provider<Map<String, GlobalKey<NavigatorState>>>((ref) {
   final isStudent = ref.read(userIsStudentStateNotifier.state).state;
 
-  // print('Senddd 0: $isStudent');
-  if(!isStudent){
+  if(isStudent){
     return {
       Routes.dashboard: GlobalKey<NavigatorState>(),
       Routes.myProfile: GlobalKey<NavigatorState>(),

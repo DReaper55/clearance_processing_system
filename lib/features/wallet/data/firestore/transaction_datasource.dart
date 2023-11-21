@@ -14,4 +14,13 @@ class TransactionRepository {
 
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
+
+  Future<List<Map<String, dynamic>>> getAllTransactions() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await _firestore
+        .collection(FireStoreCollectionStrings.transactions)
+        .get();
+
+    return querySnapshot.docs.map((doc) => doc.data()).toList();
+  }
 }
