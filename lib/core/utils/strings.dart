@@ -20,10 +20,6 @@ class AppStrings {
   static const successText = 'Saved successfully';
 
   static const successPayment = 'Payment completed';
-  static const successCatalogUploadText = 'Uploaded item to catalog';
-  static const successUpdatedOrderStatus = 'Updated order status';
-
-  static const addedToCart = 'Item added to cart';
 
   static const dashboard = 'Dashboard';
   static const userManagement = 'User management';
@@ -57,7 +53,6 @@ class ButtonStrings {
   static const add = 'Add';
   static const finish = 'Finish';
   static const save = 'Save';
-  static const whatAreThese = 'What are these?';
 }
 
 class LabelStrings {
@@ -90,12 +85,4 @@ class FireStoreCollectionStrings {
   static const requirements = 'requirements';
   static const uploadedRequirements = 'uploadedRequirements';
   static const transactions = 'transactions';
-}
-
-class FBRealtimeDBCollectionStrings {
-  FBRealtimeDBCollectionStrings._();
-
-  static const categories = 'categories';
-  static const homepageImages = 'homepageImages';
-  static const customerCategoryImages = 'customerCategoryImages';
 }

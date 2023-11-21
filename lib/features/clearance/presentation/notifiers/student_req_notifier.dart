@@ -69,7 +69,7 @@ class StudentReqNotifier extends ChangeNotifier {
       UploadedReqEntity uploadedReq = UploadedReqEntity(
         dateTime: DateTime.now().toString(),
         requirementID: requirementID,
-        // imageUrl: ,
+        userID: FirebaseAuth.instance.currentUser!.uid,
         id: nanoid(6),
         imageFile: result.files.first.bytes!,
         verificationStatus: VerificationStatus.pending.name,

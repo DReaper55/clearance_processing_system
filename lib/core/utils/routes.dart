@@ -13,6 +13,7 @@ import 'package:clearance_processing_system/features/login/presentation/pages/lo
 import 'package:clearance_processing_system/features/my-profile/presentation/pages/my_profile.dart';
 import 'package:clearance_processing_system/features/register/presentation/pages/register.dart';
 import 'package:clearance_processing_system/features/student-management/presentation/pages/register_student.dart';
+import 'package:clearance_processing_system/features/student-management/presentation/pages/student_information_page.dart';
 import 'package:clearance_processing_system/features/student-management/presentation/pages/student_management.dart';
 import 'package:clearance_processing_system/features/student-management/presentation/pages/view_students.dart';
 import 'package:clearance_processing_system/features/user-management/presentation/pages/create_new_user.dart';
@@ -41,6 +42,7 @@ class Routes {
   static const studentManagement = '/studentManagement';
   static const createStudent = '/createStudent';
   static const viewStudents = '/viewStudents';
+  static const studentInfoPage = '/studentInfoPage';
 
   static const userManagement = '/userManagement';
   static const createNewUser = '/createNewUser';
@@ -89,6 +91,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const RegisterStudent());
       case viewStudents:
         return MaterialPageRoute(builder: (_) => const ViewStudents());
+      case studentInfoPage:
+        return MaterialPageRoute(builder: (_) => const StudentInfoPage());
       case userManagement:
         return MaterialPageRoute(builder: (_) => const UserManagement());
       case createNewUser:

@@ -16,7 +16,7 @@ class ViewStudents extends HookConsumerWidget {
     useEffect(() {
 
       Future.delayed(const Duration(milliseconds: 500), () {
-        viewStudentsNotifier.getStudents();
+        viewStudentsNotifier.setData();
       });
 
       return () {
@@ -27,7 +27,7 @@ class ViewStudents extends HookConsumerWidget {
         title: AppStrings.viewStudents,
         child: SizedBox(
           child: (){
-            if(viewStudentsNotifier.students.value.isEmpty){
+            if(viewStudentsNotifier.studentCategory.value.isEmpty){
               return const Center(child: SizedBox(
                   height: 50.0,
                   width: 50.0,
@@ -48,27 +48,39 @@ class UserTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userRecords = viewStudentsNotifier.students.value;
-    List<DataRow> dataRows = userRecords.map((e) => DataRow(cells: [
-      DataCell(Text(e.email!)),
-      DataCell(Text(e.fullName!)),
-      DataCell(Text(e.matric!)),
-      DataCell(Text(e.faculty!)),
-      DataCell(Text(e.department!)),
-      DataCell(Text(e.dateTime!)),
-    ])).toList();
+    final userRecords = viewStudentsNotifier.studentCategory.value;
+    List<DataRow> dataRows = userRecords.map((e) => DataRow(
+        cells: [
+      DataCell(Text(e.studentEntity!.email!)),
+      DataCell(Text(e.studentEntity!.fullName!)),
+      DataCell(Text(e.studentEntity!.matric!)),
+      DataCell(Text(e.studentEntity!.faculty!)),
+      DataCell(Text(e.studentEntity!.department!)),
+      DataCell(Text(e.paymentEntity!.length.toString())),
+      DataCell(Text(e.requirementEntity!.length.toString())),
+      DataCell(Text(e.studentEntity!.dateTime!)),
+    ],
+        onSelectChanged: (selected){
+          if(selected != null && selected){
+            viewStudentsNotifier.navigateToStudentInfoPage(e);
+          }
+        }
+    )).toList();
 
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
         rows: dataRows,
+        showCheckboxColumn: false,
         columns: const [
           DataColumn(label: Text("Email")),
           DataColumn(label: Text("Full name")),
           DataColumn(label: Text("Matric number")),
           DataColumn(label: Text("Faculty")),
           DataColumn(label: Text("Department")),
+          DataColumn(label: Text("No of payments")),
+          DataColumn(label: Text("No of pending verification")),
           DataColumn(label: Text("Date created")),
         ],
       ),
