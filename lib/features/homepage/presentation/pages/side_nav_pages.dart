@@ -7,6 +7,7 @@ import 'package:clearance_processing_system/core/utils/routes.dart';
 import 'package:clearance_processing_system/general_widgets/side_navigation.dart';
 
 import '../../../../core/services/new_navigation_services.dart';
+import '../../../login/presentation/notifiers/user_notifier.dart';
 
 
 // final List<String> pageKeys = [ Routes.dashboard, Routes.userManagement, Routes.studentManagement, Routes.feeManagement ];
@@ -21,7 +22,7 @@ class SideNavPages extends HookConsumerWidget {
     final selectedIndexState = ref.watch(selectedIndexProvider.state);
     final navigatorKeys = ref.watch(navigatorKeysProvider);
 
-    final isStudent = ref.watch(userIsStudentStateNotifier.state);
+    final isStudent = ref.watch(userIsStudentStateNotifier);
 
     void selectTab(String tabItem, int index) {
       if (tabItem == currentPage) {
@@ -58,14 +59,14 @@ class SideNavPages extends HookConsumerWidget {
               onTap: () {
                 int index = selectedIndexState.state;
 
-                selectTab(_getPageKeys(ref, isStudent.state)[index], index);
+                selectTab(_getPageKeys(ref, isStudent)[index], index);
               },
             ),
             CustomVerticalDivider(height: Helpers.height(context),),
 
             Expanded(
               child: Stack(
-                children: _getPageWidgets(ref, currentPage, isStudent.state),
+                children: _getPageWidgets(ref, currentPage, isStudent),
               ),
             ),
           ],

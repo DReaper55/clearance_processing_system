@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../general_widgets/spacing.dart';
 import '../../../login/presentation/notifiers/login_notifier.dart';
+import '../../../login/presentation/notifiers/user_notifier.dart';
 import '../notifiers/dashboard_notifier.dart';
 import '../widgets/infographic_card.dart';
 
@@ -16,7 +17,7 @@ class Dashboard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isStudent = ref.watch(userIsStudentStateNotifier.state);
+    final isStudent = ref.watch(userIsStudentStateNotifier);
 
     final dashboardNotifier = ref.watch(dashboardNotifierProvider);
 
@@ -37,7 +38,7 @@ class Dashboard extends HookConsumerWidget {
           children: [
             const Spacing.xLargeHeight(),
 
-            if(isStudent.state)
+            if(isStudent)
               _StudentDashboard(dashboardNotifier: dashboardNotifier,)
             else
               const _AdminDashboard(),

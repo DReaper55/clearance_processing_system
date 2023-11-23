@@ -3,6 +3,7 @@ import 'package:clearance_processing_system/core/helpers/helpers_functions.dart'
 import 'package:clearance_processing_system/core/services/navigation_services.dart';
 import 'package:clearance_processing_system/core/utils/routes.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
+import 'package:clearance_processing_system/features/login/domain/use-cases/shared_prefs_usecases.dart';
 import 'package:clearance_processing_system/features/register/domain/entities/user.dart';
 import 'package:clearance_processing_system/features/student-management/domain/entities/student.dart';
 import 'package:clearance_processing_system/features/student-management/presentation/providers/student_data_provider.dart';
@@ -12,11 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../register/presentation/notifiers/register_notifier.dart';
+import '../providers/shared_prefs_providers.dart';
+import 'user_notifier.dart';
 
 final loginNotifierProvider =
     ChangeNotifierProvider((ref) => LoginNotifier(ref));
 
-final userIsStudentStateNotifier = StateProvider<bool>((ref) => false);
+// final userIsStudentStateNotifier = StateProvider.autoDispose<bool>((ref) => false);
 
 final studentEntityState =
 StateProvider<StudentEntity?>((ref) => const StudentEntity());
@@ -73,7 +76,13 @@ class LoginNotifier extends ChangeNotifier {
 
       ref.read(authCredState.state).state = appUser.credential;
 
-      ref.read(userIsStudentStateNotifier.state).state = isStudent.value;
+      /*ref.read(saveBoolToSharedPrefsUseCase.future).then((value) {
+        value.call(SharedPrefsParams(
+          boolValue: isStudent.value
+        ));
+      });*/
+
+      ref.read(userIsStudentStateNotifier.notifier).setIsStudent(isStudent.value);
 
       _resetData();
 

@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../features/login/presentation/notifiers/login_notifier.dart';
+import '../../features/login/presentation/notifiers/user_notifier.dart';
 import '../utils/routes.dart';
 
 final currentPageProvider = StateProvider<String>((ref) => Routes.dashboard);
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
 final navigatorKeysProvider = Provider<Map<String, GlobalKey<NavigatorState>>>((ref) {
-  final isStudent = ref.read(userIsStudentStateNotifier.state).state;
+  final isStudent = ref.watch(userIsStudentStateNotifier);
 
   if(isStudent){
     return {

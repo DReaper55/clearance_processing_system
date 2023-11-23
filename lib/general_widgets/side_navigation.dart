@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../core/utils/routes.dart';
 import '../features/login/presentation/notifiers/login_notifier.dart';
+import '../features/login/presentation/notifiers/user_notifier.dart';
 
 class NavigationRailWidget extends HookConsumerWidget {
   final StateController<int> currentIndex;
@@ -49,7 +50,7 @@ class NavigationRailWidget extends HookConsumerWidget {
   }
 
   List<NavigationRailDestination> _getDestinations(WidgetRef ref) {
-    final isStudent = ref.read(userIsStudentStateNotifier.state).state;
+    final isStudent = ref.read(userIsStudentStateNotifier);
 
     if(isStudent){
       return const [
