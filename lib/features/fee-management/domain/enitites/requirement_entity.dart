@@ -1,4 +1,4 @@
-import 'package:clearance_processing_system/features/clearance/domain/uploaded_req_entity.dart';
+import 'package:clearance_processing_system/features/clearance/domain/entities/uploaded_req_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class RequirementEntity extends Equatable {

@@ -1,6 +1,6 @@
 import 'package:clearance_processing_system/core/services/new_navigation_services.dart';
 import 'package:clearance_processing_system/core/utils/routes.dart';
-import 'package:clearance_processing_system/features/clearance/domain/uploaded_req_entity.dart';
+import 'package:clearance_processing_system/features/clearance/domain/entities/uploaded_req_entity.dart';
 import 'package:clearance_processing_system/features/clearance/presentation/notifiers/student_req_notifier.dart';
 import 'package:clearance_processing_system/features/clearance/presentation/providers/requirement_data_provider.dart';
 import 'package:clearance_processing_system/features/clearance/presentation/providers/uploaded_req_data_provider.dart';

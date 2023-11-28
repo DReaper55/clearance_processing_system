@@ -1,6 +1,6 @@
 import 'package:clearance_processing_system/core/helpers/helpers_functions.dart';
 import 'package:clearance_processing_system/core/utils/strings.dart';
-import 'package:clearance_processing_system/features/clearance/domain/uploaded_req_entity.dart';
+import 'package:clearance_processing_system/features/clearance/domain/entities/uploaded_req_entity.dart';
 import 'package:clearance_processing_system/features/clearance/presentation/notifiers/student_req_notifier.dart';
 import 'package:clearance_processing_system/features/register/domain/use-cases/vendor_firestore_usecases.dart';
 import 'package:clearance_processing_system/features/register/presentation/providers/save_data_to_firebase_providers.dart';

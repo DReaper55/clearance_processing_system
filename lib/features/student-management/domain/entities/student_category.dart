@@ -1,4 +1,4 @@
-import 'package:clearance_processing_system/features/clearance/domain/uploaded_req_entity.dart';
+import 'package:clearance_processing_system/features/clearance/domain/entities/uploaded_req_entity.dart';
 import 'package:clearance_processing_system/features/fee-management/domain/enitites/requirement_entity.dart';
 import 'package:clearance_processing_system/features/student-management/domain/entities/student.dart';
 import 'package:clearance_processing_system/features/wallet/domain/enitites/payment.dart';

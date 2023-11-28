@@ -7,7 +7,6 @@ import 'package:clearance_processing_system/features/register/domain/use-cases/v
 import 'package:clearance_processing_system/features/register/presentation/providers/save_data_to_firebase_providers.dart';
 import 'package:clearance_processing_system/features/student-management/presentation/providers/student_data_provider.dart';
 import 'package:clearance_processing_system/features/wallet/domain/enitites/payment.dart';
-import 'package:clearance_processing_system/features/wallet/domain/enitites/transaction.dart';
 import 'package:clearance_processing_system/features/wallet/presentation/notifiers/payment_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +18,7 @@ import '../../../fee-management/domain/enitites/requirement_entity.dart';
 import '../../../fee-management/presentation/providers/fee_data_provider.dart';
 import '../../../student-management/domain/entities/student.dart';
 import '../../../wallet/presentation/providers/transaction_data_provider.dart';
-import '../../domain/fee_category.dart';
+import '../../domain/entities/fee_category.dart';
 import '../providers/requirement_data_provider.dart';
 
 final clearanceNotifierProvider =

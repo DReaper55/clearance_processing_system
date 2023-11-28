@@ -108,11 +108,6 @@ class _ShrinkButtonState extends State<ShrinkButton>
                 ? Border.all(width: 2.0, color: UCPSColors.primary)
                 : null,
             borderRadius: BorderRadius.circular(widget.radius),
-            gradient: () {
-              if (widget.hasGradientBackground && widget.isEnabled) {
-                return NetServeWidgetGradient.gradient;
-              }
-            }(),
             color: widget.color ??
                 (!widget.isEnabled
                     ? UCPSColors.primaryFade

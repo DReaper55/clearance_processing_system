@@ -1,8 +1,8 @@
 import 'package:http/http.dart' as http;
 
 import 'package:clearance_processing_system/core/utils/strings.dart';
-import 'package:clearance_processing_system/features/clearance/domain/fee_category.dart';
-import 'package:clearance_processing_system/features/clearance/domain/uploaded_req_entity.dart';
+import 'package:clearance_processing_system/features/clearance/domain/entities/fee_category.dart';
+import 'package:clearance_processing_system/features/clearance/domain/entities/uploaded_req_entity.dart';
 import 'package:clearance_processing_system/features/register/domain/use-cases/vendor_firestore_usecases.dart';
 import 'package:clearance_processing_system/features/register/presentation/providers/save_data_to_firebase_providers.dart';
 import 'package:file_picker/file_picker.dart';
@@ -44,8 +44,6 @@ class StudentReqNotifier extends ChangeNotifier {
       final foundReq = uploadedReqs.firstWhere((element) => element.requirementID == feeCat.value.requirementEntities![i].requirementID, orElse: () => const UploadedReqEntity());
 
       if(foundReq.id != null){
-        // final mFoundReq = foundReq.copyWith(imageFile: await loadImage(foundReq.imageUrl!));
-
         feeCat.value.requirementEntities![i] = feeCat.value.requirementEntities![i].copyWith(uploadedReqEntity: foundReq);
       }
     }

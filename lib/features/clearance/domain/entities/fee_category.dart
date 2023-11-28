@@ -2,8 +2,6 @@ import 'package:clearance_processing_system/features/fee-management/domain/eniti
 import 'package:clearance_processing_system/features/fee-management/domain/enitites/requirement_entity.dart';
 import 'package:equatable/equatable.dart';
 
-import 'uploaded_req_entity.dart';
-
 class FeeCategory extends Equatable {
   final FeeEntity? feeEntity;
   final List<RequirementEntity>? requirementEntities;
