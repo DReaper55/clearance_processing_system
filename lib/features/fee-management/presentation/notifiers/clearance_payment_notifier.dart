@@ -20,7 +20,7 @@ class ClearancePaymentNotifier extends ChangeNotifier {
   ClearancePaymentNotifier(this.ref);
 
   void setData() async {
-    final payments = await _getAllTransactions();
+    final payments = await getAllTransactions();
     final students = await _getStudents();
     final fees = await _getFees();
 
@@ -42,7 +42,7 @@ class ClearancePaymentNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<PaymentEntity>> _getAllTransactions() async {
+  Future<List<PaymentEntity>> getAllTransactions() async {
     final transactionRes = await ref.read(transactionRepositoryProvider).getAllTransactions();
     return transactionRes.map((e) => PaymentEntity.fromMap(e)).toList();
   }

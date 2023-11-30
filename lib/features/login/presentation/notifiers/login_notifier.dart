@@ -36,6 +36,8 @@ class LoginNotifier extends ChangeNotifier {
 
   final isCreating = ValueNotifier(false);
 
+  final canRegisterNewAccount = ValueNotifier(false);
+
   LoginNotifier(this.ref);
 
   void toggleUserType(bool? value) {
@@ -76,12 +78,6 @@ class LoginNotifier extends ChangeNotifier {
 
       ref.read(authCredState.state).state = appUser.credential;
 
-      /*ref.read(saveBoolToSharedPrefsUseCase.future).then((value) {
-        value.call(SharedPrefsParams(
-          boolValue: isStudent.value
-        ));
-      });*/
-
       ref.read(userIsStudentStateNotifier.notifier).setIsStudent(isStudent.value);
 
       _resetData();
@@ -89,11 +85,6 @@ class LoginNotifier extends ChangeNotifier {
       _setUserData();
 
       Future.delayed(const Duration(seconds: 1), (){
-        /*if(isStudent.value){
-          ref.read(navigationService).navigateToNamed(Routes.studentNavPages);
-          return;
-        }*/
-
         ref.read(navigationService).navigateToNamed(Routes.sideNavPages);
         return;
       });
@@ -110,6 +101,16 @@ class LoginNotifier extends ChangeNotifier {
 
   void navigateToRegistrationPage() {
     ref.read(navigationService).navigateToNamed(Routes.register);
+  }
+
+  void checkForUsers() async {
+    final userRef = await ref.read(userRepositoryProvider).getUsers();
+
+    if(userRef.isEmpty){
+      canRegisterNewAccount.value = true;
+    }
+
+    notifyListeners();
   }
 
   void _setUserData() async {

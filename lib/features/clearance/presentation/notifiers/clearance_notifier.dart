@@ -44,7 +44,7 @@ class ClearanceNotifier extends ChangeNotifier {
 
     final fees = await _getFees();
     final requirements = await  _getRequirements();
-    final transactions = await  _getTransactions();
+    final transactions = await  getTransactions();
 
     for(var fee in fees){
       final foundReq = requirements.where((element) => element.feeID == fee.feeID).toList();
@@ -79,7 +79,7 @@ class ClearanceNotifier extends ChangeNotifier {
     return requirementRes.map((e) => RequirementEntity.fromMap(e)).toList();
   }
 
-  Future<List<PaymentEntity>> _getTransactions() async {
+  Future<List<PaymentEntity>> getTransactions() async {
     final transactionRes = await ref.read(transactionRepositoryProvider).getTransactions();
 
     return transactionRes.map((e) => PaymentEntity.fromMap(e)).toList();

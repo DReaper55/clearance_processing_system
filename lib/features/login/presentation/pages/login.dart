@@ -5,6 +5,7 @@ import 'package:clearance_processing_system/core/utils/validations.dart';
 import 'package:clearance_processing_system/general_widgets/shrink_button.dart';
 import 'package:clearance_processing_system/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../notifiers/login_notifier.dart';
@@ -15,6 +16,12 @@ class Login extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginNotifier = ref.watch(loginNotifierProvider);
+
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 500), loginNotifier.checkForUsers);
+
+      return () {};
+    }, []);
 
     return  Scaffold(
       body: Center(
@@ -61,6 +68,8 @@ class Login extends HookConsumerWidget {
                 ),
 
                 const Spacing.xxLargeHeight(),
+
+                if(loginNotifier.canRegisterNewAccount.value)
                 TextButton(
                   onPressed: loginNotifier.navigateToRegistrationPage,
                   child: const Text('Register a new admin'),

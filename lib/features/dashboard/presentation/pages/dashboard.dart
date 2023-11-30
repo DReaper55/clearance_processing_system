@@ -23,7 +23,8 @@ class Dashboard extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 500), () {
-        dashboardNotifier.setData();
+        dashboardNotifier.setStudentData();
+        dashboardNotifier.setAdminData();
       });
 
       return () {};
@@ -41,7 +42,7 @@ class Dashboard extends HookConsumerWidget {
             if(isStudent)
               _StudentDashboard(dashboardNotifier: dashboardNotifier,)
             else
-              const _AdminDashboard(),
+              _AdminDashboard(dashboardNotifier: dashboardNotifier,),
           ],
         ),
       ),
@@ -52,7 +53,7 @@ class Dashboard extends HookConsumerWidget {
 class _StudentDashboard extends StatelessWidget {
   final DashboardNotifier dashboardNotifier;
 
-  const _StudentDashboard({super.key, required this.dashboardNotifier});
+  const _StudentDashboard({required this.dashboardNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,9 @@ class _StudentDashboard extends StatelessWidget {
 }
 
 class _AdminDashboard extends StatelessWidget {
-  const _AdminDashboard({super.key});
+  final DashboardNotifier dashboardNotifier;
+
+  const _AdminDashboard({required this.dashboardNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +88,7 @@ class _AdminDashboard extends StatelessWidget {
           titleText: 'Cleared students',
         ),
         InfographicCard(
-          bodyText: '0',
+          bodyText: 'N ${dashboardNotifier.totalRevenue.value.addComma()}',
           titleText: 'Total revenue',
         ),
       ],
